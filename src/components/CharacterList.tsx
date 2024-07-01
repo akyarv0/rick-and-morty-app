@@ -4,11 +4,18 @@ import CharacterCard from './CharacterCard';
 import { Character } from '../Character';
 import Filter from './Filter';
 
+interface FilterCriteria {
+  species: string[];
+  status: string[];
+  gender: string[];
+
+}
+
 const CharacterList: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<FilterCriteria>({ species: [], status: [], gender: [] });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,19 +33,22 @@ const CharacterList: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleFilterChange = (selectedFilters: string[]) => {
-    setFilters(selectedFilters);
-  };
-
   useEffect(() => {
-    if (filters.length === 0) {
-      setFilteredCharacters(characters);
-    } else if (filters.includes('all')) {
-      setFilteredCharacters(characters);
-    } else {
-      setFilteredCharacters(characters.filter(character => filters.includes(character.status)));
-    }
+    const applyFilters = () => {
+      const filtered = characters.filter(character =>
+        Object.entries(filters).every(([key, values]) =>
+          values.length ? values.includes(character[key]) : true
+        )
+      );
+      setFilteredCharacters(filtered);
+    };
+
+    applyFilters();
   }, [filters, characters]);
+
+  const handleFilterChange = (filterCategory: string, selectedFilters: string[]) => {
+    setFilters(prevFilters => ({ ...prevFilters, [filterCategory]: selectedFilters }));
+  };
 
   if (loading) {
     return <div>Loading...</div>;
