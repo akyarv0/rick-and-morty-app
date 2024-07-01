@@ -48,8 +48,8 @@ const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   return (
     <div className="p-4 bg-gray-800 text-white rounded mb-4">
       <label className="block mb-2">Filter by Status:</label>
-      <div>
-        <label className="inline-flex items-center mr-4">
+      <div className="flex flex-col">
+        <label className="inline-flex items-center mr-4 ">
           <input
             type="checkbox"
             className="form-checkbox"
