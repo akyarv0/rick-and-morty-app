@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Character } from '../Character';
-import CharacterDetails from './CharacterDetails';
+import React, { useState } from "react";
+import { Character } from "../Character";
+import CharacterDetails from "./CharacterDetails";
 
 interface CharacterCardProps {
   character: Character;
@@ -15,11 +15,19 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img className="w-full md:w-40 object-cover" src={character.image} alt={character.name} />
+      <img
+        className="w-full md:w-40 object-cover"
+        src={character.image}
+        alt={character.name}
+      />
       <div className="p-4 flex flex-col justify-between">
         <div>
           <div className="font-bold text-xl mb-2">{character.name}</div>
-          <div className={`text-sm mb-2 ${character.status === 'Alive' ? 'text-green-500' : 'text-red-500'}`}>
+          <div
+            className={`text-sm mb-2 ${
+              character.status === "Alive" ? "text-green-500" : "text-red-500"
+            }`}
+          >
             {character.status} - {character.species}
           </div>
         </div>
@@ -33,6 +41,6 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
       {isHovered && <CharacterDetails character={character} />}
     </div>
   );
-}
+};
 
 export default CharacterCard;
